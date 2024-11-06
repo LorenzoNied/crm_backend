@@ -8,7 +8,7 @@ public interface ClienteUseCase {
     public List<Cliente> listarCliente();
     public Cliente listarClientePorId (int id);
     public void adicionarCliente (Cliente cliente);
-    public String deletarCliente (int id);
-    public String atualizarCliente (int id, Cliente cliente);
+    public void deletarCliente (int id);
+    public void atualizarCliente (int id, Cliente cliente);
 
 }
