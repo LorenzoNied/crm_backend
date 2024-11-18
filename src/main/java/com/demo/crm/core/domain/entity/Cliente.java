@@ -1,10 +1,19 @@
 package com.demo.crm.core.domain.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+
+@Entity(name = "cliente")
 public class Cliente {
+    @Id
+    @Column(name = "id")
     private int id;
+    @Column (name = "nome")
     private String nome;
+    @Column (name = "cpf")
     private String cpf;
-    private String enderecoId;
+    @Column (name = "telefone")
     private String telefone;
 
     public int getId() {
@@ -20,7 +29,7 @@ public class Cliente {
     }
 
     public void setNome(String name) {
-        this.nome = nome;
+        this.nome = name;
     }
 
     public String getCpf() {
@@ -31,19 +40,12 @@ public class Cliente {
         this.cpf = cpf;
     }
 
-    public String getEnderecoId() {
-        return enderecoId;
-    }
-
-    public void setEnderecoId(String enderecoId) {
-        this.enderecoId = enderecoId;
-    }
-
     public String getTelefone() {
         return telefone;
     }
 
     public void setTelefone(String telephone) {
-        this.telefone = telefone;
+        this.telefone = telephone;
     }
+
 }

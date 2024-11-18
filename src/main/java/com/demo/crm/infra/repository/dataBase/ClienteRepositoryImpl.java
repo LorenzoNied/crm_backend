@@ -1,4 +1,4 @@
-package com.demo.crm.infra.repository.memory;
+package com.demo.crm.infra.repository.dataBase;
 
 import com.demo.crm.core.domain.contract.ClienteRepository;
 import com.demo.crm.core.domain.entity.Cliente;
@@ -33,19 +33,19 @@ public class ClienteRepositoryImpl implements ClienteRepository {
                 .getSingleResult();
     }
 
-    @Transactional
+
     @Override
-    public void adicionarCliente(Cliente cliente) {
+    public int adicionarCliente(Cliente cliente) {
         var query = """
-                INSERT INTO cliente (nome, cpf, id_endereco, telefone)
-                VALUES (:nome, :cpf, :id_endereco, :telefone)
+                INSERT INTO cliente (nome, cpf, telefone)
+                VALUES (:nome, :cpf, :telefone)
+                RETURNING id;
                 """;
-        entityManager.createNativeQuery(query, Cliente.class)
+        return (int) entityManager.createNativeQuery(query)
                 .setParameter("nome", cliente.getNome())
                 .setParameter("cpf", cliente.getCpf())
-                .setParameter("id_endereco", cliente.getEnderecoId())
                 .setParameter("telefone", cliente.getTelefone())
-                .executeUpdate();
+                .getSingleResult();
     }
 
     @Transactional
@@ -65,12 +65,15 @@ public class ClienteRepositoryImpl implements ClienteRepository {
         var query = """
                 UPDATE cliente SET 
                 nome = :nome,
-                telefone = :telefone
+                telefone = :telefone,
+                cpf = :cpf
                 WHERE id = :id
                 """;
         entityManager.createNativeQuery(query, Cliente.class)
                 .setParameter("nome", cliente.getNome())
                 .setParameter("telefone", cliente.getTelefone())
+                .setParameter("cpf", cliente.getCpf())
+                .setParameter("id", id)
                 .executeUpdate();
     }
 }
