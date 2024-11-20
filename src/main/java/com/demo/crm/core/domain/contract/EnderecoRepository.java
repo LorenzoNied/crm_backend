@@ -6,10 +6,9 @@ import com.demo.crm.core.domain.entity.Endereco;
 import java.util.List;
 
 public interface EnderecoRepository {
-    public List<Endereco> listarEndereco();
-    public Endereco listarEnderecoPorId (int id);
-    public void adicionarEndereco (Endereco endereco);
-    public String deletarEndereco (int id);
-    public String atualizarEndereco (int id, Endereco endereco);
+    public Endereco listarEnderecoPorId (int idCliente);
+    public void adicionarEndereco (Endereco endereco, int clienteId);
+    public void deletarEndereco (int id);
+    public void atualizarEndereco (int id, Endereco endereco);
 
 }
