@@ -35,7 +35,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
 
     @Override
-    public int adicionarCliente(Cliente cliente) {
+    public int adicionarCliente(Cliente cliente) throws Exception {
         var query = """
                 INSERT INTO cliente (nome, cpf, telefone)
                 VALUES (:nome, :cpf, :telefone)
@@ -50,7 +50,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Transactional
     @Override
-    public void deletarCliente(int id) {
+    public void deletarCliente(int id) throws  Exception {
         var query = """
                 DELETE FROM cliente WHERE id = :id;
                 """;
@@ -61,7 +61,7 @@ public class ClienteRepositoryImpl implements ClienteRepository {
 
     @Transactional
     @Override
-    public void atualizarCliente(int id, Cliente cliente) {
+    public void atualizarCliente(int id, Cliente cliente) throws Exception {
         var query = """
                 UPDATE cliente SET 
                 nome = :nome,

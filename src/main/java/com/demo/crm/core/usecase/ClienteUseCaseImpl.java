@@ -48,7 +48,7 @@ public class ClienteUseCaseImpl implements ClienteUseCase {
     }
 
     @Override
-    public Cliente adicionarCliente(ClienteInput cliente) {
+    public Cliente adicionarCliente(ClienteInput cliente) throws Exception{
         int clienteID = clienteRepository.adicionarCliente(cliente.toEntity());
         enderecoRepository.adicionarEndereco(cliente.endereco().toEntity(),clienteID);
 
@@ -56,15 +56,17 @@ public class ClienteUseCaseImpl implements ClienteUseCase {
     }
 
     @Override
-    public void deletarCliente(int id) {
+    public Cliente deletarCliente(int id) throws Exception{
         enderecoRepository.deletarEndereco(id);
         clienteRepository.deletarCliente(id);
+        return null;
     }
 
     @Override
-    public void atualizarCliente(int id, ClienteInput cliente) {
+    public Cliente atualizarCliente(int id, ClienteInput cliente) throws Exception{
         clienteRepository.atualizarCliente(id, cliente.toEntity());
         enderecoRepository.atualizarEndereco(id, cliente.endereco().toEntity());
+        return null;
     }
 }
 

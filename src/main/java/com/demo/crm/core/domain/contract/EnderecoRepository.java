@@ -7,8 +7,8 @@ import java.util.List;
 
 public interface EnderecoRepository {
     public Endereco listarEnderecoPorId (int idCliente);
-    public void adicionarEndereco (Endereco endereco, int clienteId);
+    public void adicionarEndereco (Endereco endereco, int clienteId) throws Exception;
     public void deletarEndereco (int id);
-    public void atualizarEndereco (int id, Endereco endereco);
+    public void atualizarEndereco (int id, Endereco endereco) throws Exception;
 
 }
