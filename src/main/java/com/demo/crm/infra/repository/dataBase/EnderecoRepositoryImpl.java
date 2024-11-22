@@ -26,7 +26,7 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
 
     @Transactional
     @Override
-    public void adicionarEndereco(Endereco endereco, int clienteId) {
+    public void adicionarEndereco(Endereco endereco, int clienteId) throws Exception{
         var query = """
                 INSERT INTO endereco (rua, numero, bairro, cidade, id_cliente)
                 VALUES (:rua, :numero, :bairro, :cidade, :id_cliente)
@@ -52,7 +52,7 @@ public class EnderecoRepositoryImpl implements EnderecoRepository {
 
     @Transactional
     @Override
-    public void atualizarEndereco(int id, Endereco endereco) {
+    public void atualizarEndereco(int id, Endereco endereco) throws Exception{
         var query = """
                 UPDATE endereco SET
                 rua = :rua,
