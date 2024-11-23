@@ -64,5 +64,15 @@ public class PedidoRepositoryImpl implements PedidoRepository {
 
     }
 
+    @Override
+    public List<Pedido> verificarCliente(int idCliente) throws Exception{
+        var query = """
+                SELECT * FROM pedido WHERE id_cliente = :idCliente
+                """;
+                return entityManager.createNativeQuery(query, Pedido.class)
+                        .setParameter("idCliente", idCliente)
+                        .getResultList();
+    }
+
 }
 
