@@ -44,6 +44,6 @@ public class PedidoUseCaseImpl implements PedidoUseCase {
 
     @Override
     public void atualizarPedido(int id, Pedido pedido) {
-
+        pedidoRepository.atualizarPedido(id, pedido);
     }
 }
