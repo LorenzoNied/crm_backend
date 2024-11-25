@@ -11,5 +11,6 @@ public interface PedidoRepository {
     public Pedido adicionarPedido (Pedido pedido);
     public void deletarPedido (int id);
     public void atualizarPedido (int id, Pedido pedido);
+    public List<Pedido> verificarCliente(int idCliente) throws Exception;
 
 }

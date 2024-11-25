@@ -37,11 +37,11 @@ public class PedidoRepositoryImpl implements PedidoRepository {
     public Pedido adicionarPedido(Pedido pedido) {
         var query = """
                 INSERT INTO pedido (id_cliente, status, valor)
-                VALUES (:idClient, :status, :valor)
+                VALUES (:idCliente, :status, :valor)
                 RETURNING id;
                 """;
         entityManager.createNativeQuery(query)
-                .setParameter("idClient", pedido.getIdCliente())
+                .setParameter("idCliente", pedido.getIdCliente())
                 .setParameter("status", pedido.getStatus())
                 .setParameter("valor", pedido.getValor())
                 .getSingleResult();
@@ -59,9 +59,28 @@ public class PedidoRepositoryImpl implements PedidoRepository {
                 .executeUpdate();
     }
 
+    @Transactional
     @Override
     public void atualizarPedido(int id, Pedido pedido) {
+        var query = """
+                UPDATE pedido SET 
+                status = :status
+                WHERE id = :id
+                """;
+        entityManager.createNativeQuery(query, Pedido.class)
+                .setParameter("status", pedido.getStatus())
+                .setParameter("id", id)
+                .executeUpdate();
+    }
 
+    @Override
+    public List<Pedido> verificarCliente(int idCliente) throws Exception{
+        var query = """
+                SELECT * FROM pedido WHERE id_cliente = :idCliente
+                """;
+                return entityManager.createNativeQuery(query, Pedido.class)
+                        .setParameter("idCliente", idCliente)
+                        .getResultList();
     }
 
 }

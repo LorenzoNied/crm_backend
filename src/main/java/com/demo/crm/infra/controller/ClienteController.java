@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 @RestController
@@ -24,9 +25,13 @@ public class ClienteController {
     ResponseEntity<String> create (@RequestBody @Valid ClienteInput cliente) {
         try {
             Cliente clienteCreated = clienteUseCase.adicionarCliente(cliente);
-            return new ResponseEntity(clienteCreated, HttpStatus.CREATED);
-        } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity("Cliente criado com sucesso!!", HttpStatus.CREATED);
+        } catch (Exception e){
+            if (e.getMessage().contains("duplicate key")) {
+                return new ResponseEntity<>("Este CPF já está cadastrado.", HttpStatus.BAD_REQUEST);
+            } else {
+                return new ResponseEntity<>("Erro inesperado: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
@@ -41,12 +46,16 @@ public class ClienteController {
     }
 
     @DeleteMapping("/cliente/{id}")
-    ResponseEntity<Cliente> deletarCliente (@PathVariable int id) {
+    ResponseEntity<String> deletarCliente (@PathVariable int id) {
         try {
-            Cliente cliente = clienteUseCase.deletarCliente(id);
-            return new ResponseEntity(cliente, HttpStatus.OK);
+            String resposta = clienteUseCase.deletarCliente(id);
+            return new ResponseEntity(resposta, HttpStatus.OK);
         } catch (Exception e){
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            if(e.getMessage().contains("foreign key")){
+                return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            } else {
+                return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
